@@ -33,6 +33,7 @@ public class BlogActivity extends Activity {
         listView.setAdapter(adapter);
 
 
+        new BlogPostTask().execute();
     }
 
 }
