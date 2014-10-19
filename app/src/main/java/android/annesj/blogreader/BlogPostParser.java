@@ -2,6 +2,7 @@ package android.annesj.blogreader;
 
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -10,10 +11,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.logging.LoggingMXBean;
 
 public class BlogPostParser {
     private static BlogPostParser parser;
+    public ArrayList<BlogPost> posts;
+
     private BlogPostParser(){
 
     }
@@ -46,5 +50,23 @@ public class BlogPostParser {
             Log.e("BLogPostParser", "JSON Exception:" + error);
         }
         return jsonObject;
+    }
+
+    public void reedFeed(JSONObject jsonObject) {
+        try{
+            JSONArray jsonPosts = jsonObject.getJSONArray("posts");
+
+            for (int index = 0; index < jsonPosts.length(); index++){
+                JSONObject post = jsonPosts.getJSONObject(index);
+
+                String title = post.getString("title");
+                String url = post.getString("url");
+
+                BlogPost blogPost = new BlogPost(title, url);
+            }
+        }
+        catch (JSONException error){
+            Log.e("BlogPostParser", "JSONException:" + error);
+        }
     }
 }
