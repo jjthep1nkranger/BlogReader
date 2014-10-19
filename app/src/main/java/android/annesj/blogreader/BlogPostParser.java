@@ -19,7 +19,7 @@ public class BlogPostParser {
     public ArrayList<BlogPost> posts;
 
     private BlogPostParser(){
-
+        posts = new ArrayList<BlogPost>();
     }
 
     public static BlogPostParser get(){
@@ -63,6 +63,7 @@ public class BlogPostParser {
                 String url = post.getString("url");
 
                 BlogPost blogPost = new BlogPost(title, url);
+                posts.add(blogPost);
             }
         }
         catch (JSONException error){
